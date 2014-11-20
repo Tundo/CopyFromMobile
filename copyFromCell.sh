@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Set internal field separator to NewLine
+IFS='
+'
+
 PATHTELEFONO="/media/pietrorotundo/SD_GALAXYS/DCIM/Camera/test"
 PATHPC="/home/pietrorotundo/backupFotoCell"
 FORMATOFOTO="jpg"
@@ -44,20 +48,12 @@ funct_CopiaFiles()
 }
 
 funct_CancellaFiles()
-{
-    # cancella tutti i files nella path specificata
-    myPATH=$1
-    # rm $myPATH/* non funziona...cancella primo file e si blocca
-    for item in * #$(ls $PATHTELEFONO 2>/dev/null)
-    do
-        # Elimino eventuali spazi dal nome
-        $(echo $item | tr [:space:] _)
-        mv $item 
-        # Estraggo il nome del file
-        NOMEFILE=${item#*$PATHTELEFONO/}
-        #rm $PATHTELEFONO/$NOMEFILE
-        echo $NOMEFILE
-    done
+{   
+    # Ricava il l'estensione dei file da estrarre
+    local extension=$(funct_GetFormatoFile $2)
+    
+    # cancella tutti i files della tipologia specificata nella path
+    rm $1/*.$extension
 }
 
 funct_GetFormatoFile()
@@ -96,7 +92,8 @@ then
     if [ "$res" == "S" ]
     then
         echo "Cancellazione da telefono in corso..."
-        funct_CancellaFiles $PATHTELEFONO
+        funct_CancellaFiles $PATHTELEFONO "FOTO"
+        funct_CancellaFiles $PATHTELEFONO "VIDEO"
     fi
 
 else
