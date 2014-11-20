@@ -1,2 +1,3 @@
 OK - file di configurazione dove leggere le path del telefono e della destinazione dei contenuti
 - lettura di foto e video anche in altri formati (ora solo .jpg e .mp4)
+- riconoscimento del telefono collegato in base alla PATHTELEFONO trovata tra quelle presenti nel file di configurazione
