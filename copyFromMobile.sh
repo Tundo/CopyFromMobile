@@ -35,6 +35,8 @@ funct_CopiaFiles()
     # Ricava il l'estensione dei file da estrarre
     local extension=$(funct_GetFormatoFile $1)
 
+    local nrFileCopiati=0
+
     for item in $(ls $PATHTELEFONO/*.$extension 2>/dev/null)
     do
         # Estraggo il nome del file
@@ -42,10 +44,12 @@ funct_CopiaFiles()
         FILEPRESENTI=$(ls "$PATHPC/$1/$NOMEFILE" 2>/dev/null | wc -l)
         if [ "$FILEPRESENTI" -eq 0 ]
         then
-            echo "File non presente. Copia in corso"
             cp $item $PATHPC/$1
+            nrFileCopiati=$(($nrFileCopiati + 1)) 
         fi
     done
+
+    echo "Copiati $nrFileCopiati nuovi file $1"
 }
 
 funct_CancellaFiles()
@@ -104,12 +108,13 @@ main()
         echo "Copia dei video in corso..."
         funct_CopiaFiles "VIDEO"
 
+        echo ""
         echo "Copia eseguita correttamente su PC. Vuoi cancellare le foto e i video dal telefono? [S/n]"
         read res
         if [ "$res" == "S" ]
         then
             echo "Cancellazione da telefono in corso..."
-            #funct_CancellaFiles $PATHTELEFONO "FOTO"
+            funct_CancellaFiles $PATHTELEFONO "FOTO"
             funct_CancellaFiles $PATHTELEFONO "VIDEO"
         fi
     else
