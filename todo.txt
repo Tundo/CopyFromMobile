@@ -1,1 +1,2 @@
-- file di configurazione dove leggere le path del telefono e della destinazione dei contenuti
+OK - file di configurazione dove leggere le path del telefono e della destinazione dei contenuti
+- lettura di foto e video anche in altri formati (ora solo .jpg e .mp4)
