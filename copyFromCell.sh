@@ -4,8 +4,9 @@
 IFS='
 '
 
-PATHTELEFONO="/media/pietrorotundo/SD_GALAXYS/DCIM/Camera/test"
-PATHPC="/home/pietrorotundo/backupFotoCell"
+# Variabli globali
+PATHTELEFONO=""
+PATHPC=""
 FORMATOFOTO="jpg"
 FORMATOVIDEO="mp4"
 
@@ -48,12 +49,12 @@ funct_CopiaFiles()
 }
 
 funct_CancellaFiles()
-{   
+{
     # Ricava il l'estensione dei file da estrarre
     local extension=$(funct_GetFormatoFile $2)
-    
+
     # cancella tutti i files della tipologia specificata nella path
-    rm $1/*.$extension
+    rm -f $1/*.$extension
 }
 
 funct_GetFormatoFile()
@@ -69,33 +70,56 @@ funct_GetFormatoFile()
     esac
 }
 
-if [ -d $PATHTELEFONO ]
-then
-    echo "Telefono collegato"
+funct_loadConfig()
+{
+    # Estraggo una riga per volta
+    for item in $(cat config.cfg)
+    do
+        case $(echo $item | cut -d"=" -f1) in
+            "PATHTELEFONO") PATHTELEFONO=$(echo $item | cut -d"=" -f2 | tr -d '"')
+                            echo "path telefono --> $PATHTELEFONO";;
+            "PATHPC")       PATHPC=$(echo $item | cut -d"=" -f2 | tr -d '"')
+                            echo "path PC --> $PATHPC";;
+        esac
+    done
+}
 
-    # verifico/creo cartella backupTelefono
-    funct_VerificaCreaCartella $PATHPC
-
-    # visualizza info sui file presenti nel telefono
-    funct_nrFilePresenti
-
-    # Copia delle foto
-    echo "Copia delle foto in corso..."
-    funct_CopiaFiles "FOTO"
-
-    # Copia dei video
-    echo "Copia dei video in corso..."
-    funct_CopiaFiles "VIDEO"
-
-    echo "Copia eseguita correttamente su PC. Vuoi cancellare le fotoe i video dal telefono? [S/n]"
-    read res
-    if [ "$res" == "S" ]
+main()
+{
+    if [ -d $PATHTELEFONO ]
     then
-        echo "Cancellazione da telefono in corso..."
-        funct_CancellaFiles $PATHTELEFONO "FOTO"
-        funct_CancellaFiles $PATHTELEFONO "VIDEO"
-    fi
+        echo "Telefono collegato"
 
-else
-    echo "Nessun dispositivo rilevato"
-fi
+        # verifico/creo cartella backupTelefono
+        funct_VerificaCreaCartella $PATHPC
+
+        # visualizza info sui file presenti nel telefono
+        funct_nrFilePresenti
+
+        # Copia delle foto
+        echo "Copia delle foto in corso..."
+        funct_CopiaFiles "FOTO"
+
+        # Copia dei video
+        echo "Copia dei video in corso..."
+        funct_CopiaFiles "VIDEO"
+
+        echo "Copia eseguita correttamente su PC. Vuoi cancellare le foto e i video dal telefono? [S/n]"
+        read res
+        if [ "$res" == "S" ]
+        then
+            echo "Cancellazione da telefono in corso..."
+            #funct_CancellaFiles $PATHTELEFONO "FOTO"
+            funct_CancellaFiles $PATHTELEFONO "VIDEO"
+        fi
+    else
+        echo "Nessun dispositivo rilevato"
+    fi
+}
+
+# Richiamo funzione per il caricamento dei parametri
+funct_loadConfig
+
+# Richiamo main
+main
+
