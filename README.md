@@ -16,3 +16,4 @@ Istruzioni:
 
 - seguite le istruzioni a video
 
+Il file "Todo.txt" contiene l'elenco delle future implementazioni dello script
