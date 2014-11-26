@@ -20,7 +20,8 @@ Questo script e' stato creato con lo scopo di automatizzare il trasferimento del
 - seguite le istruzioni a video
 
 ### TODO
-:white_check_mark: - file di configurazione dove leggere le path del telefono e della destinazione dei contenuti
-:x: - lettura di foto e video anche in altri formati (ora solo .jpg e .mp4)
-:x: - riconoscimento del telefono collegato in base alla PATHTELEFONO trovata tra quelle presenti nel file di configurazione
-:x: - unmount del telefono una volta terminato il programma
+
+- file di configurazione dove leggere le path del telefono e della destinazione dei contenuti :white_check_mark:
+- lettura di foto e video anche in altri formati (ora solo .jpg e .mp4) :x:
+- riconoscimento del telefono collegato in base alla PATHTELEFONO trovata tra quelle presenti nel file di configurazione :x:
+- unmount del telefono una volta terminato il programma :x:
