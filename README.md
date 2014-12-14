@@ -22,6 +22,6 @@ Questo script e' stato creato con lo scopo di automatizzare il trasferimento del
 ### TODO
 
 - file di configurazione dove leggere le path del telefono e della destinazione dei contenuti :white_check_mark:
-- lettura di foto e video anche in altri formati (ora solo .jpg e .mp4) :x:
+- lettura di foto e video anche in altri formati (ora solo .jpg e .mp4) :white_check_mark:
 - riconoscimento del telefono collegato in base alla PATHTELEFONO trovata tra quelle presenti nel file di configurazione :x:
 - unmount del telefono una volta terminato il programma :x:
