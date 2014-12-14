@@ -72,10 +72,14 @@ funct_CopiaFiles()
 funct_CancellaFiles()
 {
     # Ricava la lista di estensioni dei file da estrarre
-    local extension=$(funct_GetFormatoFile $2)
+    declare -a  extension=()
+    funct_GetFormatoFile $2
 
-    # cancella tutti i files della tipologia specificata nella path
-    rm -f $1/*.$extension
+    # cancella tutti i files della tipologia specificata nella path    
+    for i in "${extension[@]}"
+    do 
+         rm -f $1/*.$i
+    done
 }
 
 funct_GetFormatoFile()
