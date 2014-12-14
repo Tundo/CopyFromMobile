@@ -7,6 +7,8 @@ IFS='
 # Variabli globali
 PATHTELEFONO=""
 PATHPC=""
+PATHTELEFONO_MEM=""
+PATHTELEFONO_SD=""
 FORMATOFOTO=("jpg" "png") #Aggiungere aventuali altri formati all'array
 FORMATOVIDEO=("mp4" "avi") #Aggiungere aventuali altri formati all'array
 
@@ -108,6 +110,11 @@ funct_loadConfig()
                             echo "path telefono --> $PATHTELEFONO";;
             "PATHPC")       PATHPC=$(echo $item | cut -d"=" -f2 | tr -d '"')
                             echo "path PC --> $PATHPC";;
+            "PATHTELEFONO_SD")  PATHTELEFONO_SD=$(echo $item | cut -d"=" -f2 | tr -d '"')
+                                echo "path telefono SD --> $PATHTELEFONO_SD";;
+            "PATHTELEFONO_MEM")  PATHTELEFONO_MEM=$(echo $item | cut -d"=" -f2 | tr -d '"')
+                            echo "path telefono MEM --> $PATHTELEFONO_MEM";;
+       
         esac
     done
 }
@@ -131,7 +138,8 @@ main()
         # Copia dei video
         echo "Copia dei video in corso..."
         funct_CopiaFiles "VIDEO"
-
+        
+        # Cancellazione dei contenuti dalla cartella sorgente
         echo ""
         echo "Copia eseguita correttamente su PC. Vuoi cancellare le foto e i video dal telefono? [S/n]"
         read res
@@ -140,7 +148,20 @@ main()
             echo "Cancellazione da telefono in corso..."
             funct_CancellaFiles $PATHTELEFONO "FOTO"
             funct_CancellaFiles $PATHTELEFONO "VIDEO"
+            echo "Cancellazione da telefono completata."
         fi
+
+        # Unmount dell'unita'
+        echo ""
+        echo "Vuoi scollegare il telefono dal PC? [S/n]"
+        read res
+        if [ "$res" == "S" ]
+        then
+            echo "Unmount da telefono in corso..."
+            umount $PATHTELEFONO_SD
+            umount $PATHTELEFONO_MEM
+            echo "Unmount da telefono completato."
+        fi 
     else
         echo "Nessun dispositivo rilevato"
     fi
