@@ -9,8 +9,10 @@ Questo script e' stato creato con lo scopo di automatizzare il trasferimento del
 - il file ```config.cfg``` deve essere completato con le path della sorgente (nel telefono) e della destinazione (il PC)
   es: 
     ```bash
-    PATHTELEFONO="/media/<user>/<telefono>/DCIM/Camera"
-    PATHPC="/home/<user>/backupFotoCell"
+    PATHTELEFONO="/media/<user>/<telefono>/DCIM/Camera" #(cartella sorgente delle foto e video nel telefono)
+    PATHPC="/home/<user>/backupFotoCell" #(cartella destinazione delle foto e video su PC)
+    PATHTELEFONO_SD="/media/<user>/<SD_partition_name>" #(path partizione scheda SD...per unmount)  
+    PATHTELEFONO_MEM="/media/<user>/<mem_partition_name>" #(path partizione memoria interna telefono...per unmount)
     ```
 
 - rendere eseguibile lo script "copyFromMobile.sh" con il comando: ```$chmod u+x copyFromMobile.py```
